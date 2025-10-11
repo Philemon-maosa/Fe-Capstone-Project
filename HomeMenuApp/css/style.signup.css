@@ -1,45 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signup | HomeMenuApp</title>
-  <link rel="stylesheet" href="css/style.login.css">
-</head>
-<body>
+/* ===========================
+   GLOBAL STYLES
+=========================== */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  min-height: 100vh;
 
-  <main class="form-container">
-    <form id="signup-form" class="form-box">
-      <h2>Hello, Sign Up Here!</h2>
-      <p class="form-subtitle">Create your account to get started</p>
+  /* center content vertically and horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-      <div class="form-group">
-        <label for="fullname">Full Name:</label>
-        <input type="text" id="fullname" placeholder="Enter your full name" required>
-      </div>
+/* ===========================
+   FORM CONTAINER
+=========================== */
+main.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
 
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
-      </div>
+/* ===========================
+   FORM BOX
+=========================== */
+form.form-box {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
-      </div>
+/* ===========================
+   HEADINGS
+=========================== */
+form.form-box h2 {
+  color: #ff6600;
+  margin-bottom: 0.3rem;
+}
 
-      <div class="form-group">
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" placeholder="Confirm your password" required>
-      </div>
+.form-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 1.8rem;
+}
 
-      <button type="submit" class="btn">Sign Up</button>
+/* ===========================
+   FORM GROUPS
+=========================== */
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
 
-      <p class="form-footer">
-        Already have an account? <a href="login.html">Login</a>
-      </p>
-    </form>
-  </main>
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
 
-</body>
-</html>
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 4px rgba(255, 102, 0, 0.3);
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+.btn {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
+}
+
+.btn:hover {
+  background-color: #e65c00;
+}
+
+/* ===========================
+   FORM FOOTER
+=========================== */
+.form-footer {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.form-footer a {
+  color: #ff6600;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}

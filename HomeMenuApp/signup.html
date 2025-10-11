@@ -4,29 +4,43 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.signup.css">
+<title>Sign Up | HomeMenuApp</title>
 </head>
 <body>
-<div class="signup-container">
-<form ="signup-form">
-<h2>Hello, Signup Here!</h2>
 
-<label for="fullname">Fullname:</label>
-<input type="text" id="fullname" placeholder="enter your full name" required><br><br>
+<main class="form-container">
+  <form id="signup-form" class="form-box">
+    <h2>Hello, Signup Here!</h2>
+    <p class="form-subtitle">Create your account to get started</p>
 
-<label for="email">Email:</label>
-<input type="text" id="email" placeholder="enter your email" required><br><br>
+    <div class="form-group">
+      <label for="fullname">Full Name:</label>
+      <input type="text" id="fullname" placeholder="Enter your full name" required>
+    </div>
 
-<label for="password">Password:</label>
-<input type="password" id="password" placeholder="enter your paassword" required><br><br>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+    </div>
 
-<label for="confirm password">Confirm Password:<label>
-<input type="password" id="confirm-password" placeholder="confirm your password" required><br><br>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+    </div>
 
-<button>Sign up </button>
+    <div class="form-group">
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+    </div>
 
-</form>
-<p>Already have an account? <a href="login.html">Login</a></p>
-</div>
+    <button type="submit" class="btn">Sign Up</button>
 
+    <p class="form-footer">
+      Already have an account? <a href="login.html">Login</a>
+    </p>
+  </form>
+</main>
+
+<script src="js/signup.js"></script>
 </body>
 </html>

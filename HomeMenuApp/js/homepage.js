@@ -2,23 +2,46 @@ document.addEventListener("DOMContentLoaded", async () => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("access");
 
+  // ✅ Redirect if not logged in
   if (!token) {
     alert("You must be logged in!");
     window.location.href = "login.html";
     return;
   }
 
-  // Display username
-  document.getElementById("welcome-text").textContent = `Welcome, ${username}!`;
+  // ✅ Display username
+  const welcomeText = document.getElementById("welcome-text");
+  if (welcomeText) {
+    welcomeText.textContent = `Welcome, ${username || "User"}!`;
+  }
 
-  // Buttons
-  document.getElementById("logout").addEventListener("click", () => {
-    localStorage.clear();
-    alert("You have been logged out.");
-    window.location.href = "login.html";
-  });
+  // ✅ Logout button
+  const logoutBtn = document.getElementById("logout");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.clear();
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    });
+  }
 
-  // Optional: fetch example data from backend
+  // ✅ “My Ingredients” button
+  const myIngredientsBtn = document.getElementById("myIngredientsBtn");
+  if (myIngredientsBtn) {
+    myIngredientsBtn.addEventListener("click", () => {
+      window.location.href = "ingredients.html";
+    });
+  }
+
+  // ✅ “View Recipes” button
+  const viewRecipesBtn = document.getElementById("viewRecipesBtn");
+  if (viewRecipesBtn) {
+    viewRecipesBtn.addEventListener("click", () => {
+      window.location.href = "recipes.html";
+    });
+  }
+
+  // ✅ Optional: Fetch recipes (for dashboard preview or console log)
   try {
     const response = await fetch("http://127.0.0.1:8000/api/recipes/", {
       headers: { Authorization: `Bearer ${token}` },
@@ -26,9 +49,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.ok) {
       const recipes = await response.json();
-      console.log("Recipes:", recipes);
+      console.log("✅ Recipes loaded:", recipes);
+
+      // Example: Display count on homepage if needed
+      const recipeCountEl = document.getElementById("recipe-count");
+      if (recipeCountEl) {
+        recipeCountEl.textContent = `${recipes.length} recipes available`;
+      }
     } else {
-      console.warn("Failed to load recipes");
+      console.warn("Failed to load recipes:", response.status);
     }
   } catch (err) {
     console.error("Error fetching recipes:", err);

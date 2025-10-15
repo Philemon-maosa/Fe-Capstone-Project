@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomeMenu | Kitchen List</title>
+  <link rel="stylesheet" href="css/kitchenlist.css">
+</head>
+<body>
+
+  <!-- ===========================
+       NAVBAR
+  ============================ -->
+  <header class="navbar">
+    <h1 class="logo">HomeMenuApp</h1>
+    <nav>
+      <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="kitchenlist.html" class="active">Kitchen List</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===========================
+       KITCHEN LIST CONTENT
+  ============================ -->
+  <div class="kitchenlist-container">
+    <h2>My Kitchen List 🍳</h2>
+
+    <!-- Add item form -->
+    <form class="add-item-form" id="addItemForm">
+      <input type="text" id="itemInput" placeholder="Enter ingredient" required>
+      <button type="submit">Add</button>
+    </form>
+
+    <!-- Ingredient list -->
+    <ul class="item-list" id="itemList">
+      <!-- Items will be dynamically added here -->
+    </ul>
+  </div>
+
+  <!-- ===========================
+       JAVASCRIPT
+  ============================ -->
+  <script src="js/kitchenlist.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+/* ===========================
+   GLOBAL STYLES
+=========================== */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ff6600;
+  color: #fff;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  text-decoration: underline;
+  color: #ffe6cc;
+}
+
+/* ===========================
+   MAIN CONTAINER
+=========================== */
+.kitchenlist-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.kitchenlist-container h2 {
+  color: #ff6600;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+/* ===========================
+   FORM
+=========================== */
+.add-item-form {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.add-item-form input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 70%;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.add-item-form input:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
+}
+
+.add-item-form button {
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-item-form button:hover {
+  background-color: #e65c00;
+  transform: scale(1.05);
+}
+
+/* ===========================
+   ITEM LIST
+=========================== */
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-list li {
+  background-color: #fdf3e7;
+  border: 1px solid #ffd6b3;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.item-list li:hover {
+  background-color: #ffe6cc;
+}
+
+.item-list li span {
+  font-weight: 500;
+}
+
+.item-list button {
+  background-color: #ff6600;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.item-list button:hover {
+  background-color: #e65c00;
+  transform: scale(1.1);
+}

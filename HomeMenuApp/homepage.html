@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset= "utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Home Menu App</title>
-<link href="css/style.css" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomeMenu | Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- 🔹 Navigation Bar -->
+  <header class="navbar">
+    <h1 class="logo">HomeMenuApp</h1>
+    <nav>
+      <ul>
+        <li><a href="homepage.html" class="active">Home</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="kitchenlist.html">Kitchen List</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header class="navbar">
-<h1 class="logo"> Home Menu App </h1>
-<nav>
-<ul class="nav-links">
-<li><a href="homepage.html" class="active">Homepage</a></li>
-<li><a href="login.html">Login</a></li>
-<li><a href="signup.html">Signup</a></li>
-<li><a href="logout.html">Logout</a></li>
-</ul>
-</nav>
-</header>
+  <!-- 🔹 Dashboard Section -->
+  <main class="dashboard-container">
+    <h1>Welcome to HomeMenu 🍽️</h1>
+    <p id="welcome-text">Loading your info...</p>
 
-<section class ="hero">
-<h2>Find out what you can cook on this beautiful day<h2>
-<p> You can be able to choose on what you want to cook and you will 
-be assisted on the recipe.</p>
-<a href="signup.html" class="btn">Click to get started</a>
+    <section class="actions">
+      <button id="view-recipes">View Recipes</button>
+      <button id="view-ingredients">My Ingredients</button>
+      
+    </section>
+  </main>
 
-</section>
-
-
-<footer>
-<p>@ 2025 HomeMenuApp. All rights reserved.</p>
-</footer>
+  <!-- 🔹 Script -->
+  <script src="js/homepage.js"></script>
 </body>
-
 </html>

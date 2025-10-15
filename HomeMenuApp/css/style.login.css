@@ -8,96 +8,45 @@ body {
   color: #333;
   min-height: 100vh;
 
-  /* ✅ Center everything vertically & horizontally */
+  /* center content vertically and horizontally */
   display: flex;
-  flex-direction: column;
-}
-
-/* ===========================
-   NAVBAR
-=========================== */
-.navbar {
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-color: #fff;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ff6600;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav-links li a:hover,
-.nav-links li a.active {
-  color: #ff6600;
 }
 
 /* ===========================
-   FORM CONTAINER
+   LOGIN CONTAINER
 =========================== */
-main.form-container {
-  flex: 1; /* makes it take up full remaining height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* ✅ center vertically */
-  align-items: center;     /* ✅ center horizontally */
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-}
-
-/* ✅ Wrapper box for the form */
-.form-container form {
-  width: 100%;
-  max-width: 400px;
-  background: #fff;
-  padding: 2rem;
+.login-container {
+  background-color: #fff;
+  padding: 2.5rem 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
 }
 
 /* ===========================
-   HEADINGS
+   HEADING
 =========================== */
-.form-container h2 {
+.login-container h2 {
   color: #ff6600;
-  text-align: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
-.form-subtitle {
+.login-container p {
   color: #666;
-  text-align: center;
-  margin-bottom: 1.8rem;
   font-size: 0.95rem;
+  margin-bottom: 1.5rem;
 }
 
 /* ===========================
-   FORM INPUTS
+   FORM ELEMENTS
 =========================== */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   text-align: left;
 }
 
@@ -108,12 +57,12 @@ main.form-container {
 }
 
 .form-group input {
-  width: 100%;                 /* ✅ ensures full visibility */
-  padding: 0.8rem;             /* ✅ enough padding for visibility */
+  width: 100%;
+  padding: 0.8rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-sizing: border-box;      /* ✅ prevents overflow issues */
+  box-sizing: border-box;
 }
 
 .form-group input:focus {
@@ -123,17 +72,9 @@ main.form-container {
 }
 
 /* ===========================
-   BUTTONS & LINKS
+   BUTTON
 =========================== */
-.forgot {
-  text-align: right;
-  font-size: 0.9rem;
-  color: #ff6600;
-  cursor: pointer;
-  margin-bottom: 1rem;
-}
-
-.btn {
+button {
   width: 100%;
   padding: 0.9rem;
   background-color: #ff6600;
@@ -144,35 +85,22 @@ main.form-container {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: 1rem;
 }
 
-.btn:hover {
+button:hover {
   background-color: #e65c00;
 }
 
-.form-footer {
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-.form-footer a {
+/* ===========================
+   FOOTER LINK
+=========================== */
+.login-container p a {
   color: #ff6600;
   text-decoration: none;
+  font-weight: 500;
 }
 
-.form-footer a:hover {
+.login-container p a:hover {
   text-decoration: underline;
-}
-
-/* ===========================
-   FOOTER
-=========================== */
-footer {
-  text-align: center;
-  padding: 1rem 0;
-  background-color: #fff;
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.05);
-  font-size: 0.9rem;
-  color: #666;
 }

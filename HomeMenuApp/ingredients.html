@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Ingredients | HomeMenu</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <h1 class="logo">HomeMenuApp</h1>
+    <nav>
+      <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="kitchenlist.html">Kitchen List</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="ingredients-container">
+    <h2>My Ingredients 🧂</h2>
+    <form id="ingredient-form">
+      <input type="text" id="ingredient-name" placeholder="Enter ingredient..." required>
+      <button type="submit">Add Ingredient</button>
+    </form>
+
+    <ul id="ingredients-list"></ul>
+  </main>
+
+  <script src="js/ingredients.js"></script>
+</body>
+</html>

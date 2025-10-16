@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Details | HomeMenuApp</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <h1 class="logo">🍽️ HomeMenuApp</h1>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="homepage.html">Homepage</a></li>
+        <li><a href="recipes.html" class="active">Recipes</a></li>
+        <li><a href="kitchenlist.html">My Kitchen</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="recipe-detail-container">
+    <div id="recipe-detail" class="recipe-card">
+      <h2 id="recipe-title">Loading recipe...</h2>
+      <p id="recipe-description"></p>
+
+      <section class="ingredients-section">
+        <h3>Ingredients</h3>
+        <ul id="ingredients-list"></ul>
+      </section>
+
+      <section class="instructions-section">
+        <h3>Instructions</h3>
+        <p id="recipe-instructions"></p>
+      </section>
+
+      <button id="back-btn" class="btn">← Back to Recipes</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 HomeMenuApp. All rights reserved.</p>
+  </footer>
+
+  <script src="js/recipe-detail.js"></script>
+</body>
+</html>

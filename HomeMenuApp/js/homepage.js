@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     welcomeText.textContent = `Welcome, ${username || "User"}!`;
   }
 
-  // ✅ Logout button
+  // ✅ Logout button (from navbar)
   const logoutBtn = document.getElementById("logout");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // ✅ “My Ingredients” button
-  const myIngredientsBtn = document.getElementById("myIngredientsBtn");
+  const myIngredientsBtn = document.getElementById("view-ingredients");
   if (myIngredientsBtn) {
     myIngredientsBtn.addEventListener("click", () => {
       window.location.href = "ingredients.html";
@@ -34,18 +34,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // ✅ “View Recipes” button
-  const viewRecipesBtn = document.getElementById("viewRecipesBtn");
+  const viewRecipesBtn = document.getElementById("view-recipes");
   if (viewRecipesBtn) {
     viewRecipesBtn.addEventListener("click", () => {
       window.location.href = "recipes.html";
     });
   }
 
-  // ✅ Optional: Fetch recipes (for dashboard preview or console log)
+  // Optional: Fetch recipes for dashboard preview
   try {
     const response = await fetch("http://127.0.0.1:8000/api/recipes/", {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
+
+    if (response.status === 401) {
+      // Token expired or invalid
+      alert("Session expired. Please log in again.");
+      localStorage.clear();
+      window.location.href = "login.html";
+      return;
+    }
 
     if (response.ok) {
       const recipes = await response.json();

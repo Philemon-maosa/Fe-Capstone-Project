@@ -127,3 +127,79 @@ body {
     width: 100%;
   }
 }
+
+/* ================================
+   RECIPE PAGE STYLING
+================================ */
+.suggest-btn {
+  display: inline-block;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  margin: 15px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.suggest-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.suggest-btn:active {
+  transform: scale(0.97);
+}
+
+/* Recipes container and cards */
+.recipes-container {
+  padding: 20px;
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.recipe-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recipe-card h3 {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.recipe-card p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.view-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.view-btn:hover {
+  background-color: #0056b3;
+}
+

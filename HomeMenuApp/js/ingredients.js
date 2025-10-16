@@ -1,106 +1,88 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("access");
-  const form = document.getElementById("ingredient-form");
-  const input = document.getElementById("ingredient-name");
-  const list = document.getElementById("ingredients-list");
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("ingredient-form");
+    const list = document.getElementById("ingredients-list");
+    const token = localStorage.getItem("access");
+    const API_URL = "http://127.0.0.1:8000/api/pantry/";
 
-  if (!token) {
-    alert("Please log in first!");
-    window.location.href = "login.html";
-    return;
-  }
-
-  // 🔹 Load ingredients from backend
-  async function loadIngredients() {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/recipes/ingredients/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        list.innerHTML = `<li>Failed to load ingredients (Status: ${response.status})</li>`;
+    if (!token) {
+        alert("Please log in first!");
+        window.location.href = "login.html";
         return;
-      }
-
-      const ingredients = await response.json();
-      list.innerHTML = "";
-
-      if (ingredients.length === 0) {
-        list.innerHTML = "<li>No ingredients added yet.</li>";
-        return;
-      }
-
-      ingredients.forEach(addIngredientToDOM);
-    } catch (err) {
-      console.error("Error fetching ingredients:", err);
-      list.innerHTML = "<li>Error loading ingredients.</li>";
     }
-  }
 
-  // 🔹 Add ingredient to backend
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = input.value.trim();
-    if (name === "") return;
+    // ✅ Fetch and display ingredients
+    async function loadIngredients() {
+        list.innerHTML = ""; // clear list first
+        try {
+            const response = await fetch(API_URL, {
+                headers: { "Authorization": `Bearer ${token}` },
+            });
 
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/recipes/ingredients/", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name }),
-      });
+            if (!response.ok) throw new Error("Failed to fetch ingredients");
 
-      if (!response.ok) {
-        alert("Failed to add ingredient!");
-        return;
-      }
-
-      const newIngredient = await response.json();
-      addIngredientToDOM(newIngredient);
-      input.value = "";
-    } catch (err) {
-      console.error("Error adding ingredient:", err);
+            const ingredients = await response.json();
+            ingredients.forEach(item => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    ${item.name} 
+                    <button class="delete-btn" data-id="${item.id}">❌</button>
+                `;
+                list.appendChild(li);
+            });
+        } catch (error) {
+            console.error("Error loading ingredients:", error);
+        }
     }
-  });
 
-  // 🔹 Add ingredient item to DOM
-  function addIngredientToDOM(ingredient) {
-    const li = document.createElement("li");
-    li.textContent = ingredient.name;
+    // ✅ Add new ingredient
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("ingredient-name").value.trim();
 
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.classList.add("delete-btn");
+        if (!name) return alert("Please enter an ingredient name.");
 
-    delBtn.addEventListener("click", async () => {
-      try {
-        const res = await fetch(
-          `http://127.0.0.1:8000/api/recipes/ingredients/${ingredient.id}/`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({ name }),
+            });
 
-        if (res.ok) li.remove();
-        else alert("Failed to delete ingredient.");
-      } catch (err) {
-        console.error("Error deleting ingredient:", err);
-      }
+            if (!response.ok) throw new Error("Failed to add ingredient");
+
+            form.reset();
+            await loadIngredients(); // refresh list
+        } catch (error) {
+            console.error("Error adding ingredient:", error);
+        }
     });
 
-    li.appendChild(delBtn);
-    list.appendChild(li);
-  }
+    // ✅ Delete ingredient
+    list.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("delete-btn")) {
+            const id = e.target.getAttribute("data-id");
+            if (!confirm("Are you sure you want to delete this ingredient?")) return;
 
-  // Load ingredients initially
-  loadIngredients();
+            try {
+                const response = await fetch(`${API_URL}${id}/`, {
+                    method: "DELETE",
+                    headers: { "Authorization": `Bearer ${token}` },
+                });
+
+                if (response.ok) {
+                    e.target.parentElement.remove(); // remove from list instantly
+                } else {
+                    throw new Error("Failed to delete ingredient");
+                }
+            } catch (error) {
+                console.error("Error deleting ingredient:", error);
+            }
+        }
+    });
+
+    // Initial load
+    loadIngredients();
 });

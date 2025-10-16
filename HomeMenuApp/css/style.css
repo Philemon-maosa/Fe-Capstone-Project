@@ -10,10 +10,10 @@ body {
 }
 
 /* ===========================
-   NAVIGATION BAR
+   NAVIGATION BAR (UPDATED)
 =========================== */
 .navbar {
-  background-color: #fff;
+  background-color: #ff6600; /* match dashboard theme */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 1rem 2rem;
   display: flex;
@@ -25,9 +25,9 @@ body {
 }
 
 .navbar .logo {
-  color: #ff6600;
-  font-size: 1.5rem;
-  font-weight: 600;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -41,16 +41,31 @@ body {
 
 .navbar a {
   text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  transition: color 0.3s, border-bottom 0.3s;
+  color: #fff;
+  font-weight: 600;
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .navbar a:hover,
 .navbar a.active {
-  color: #ff6600;
-  border-bottom: 2px solid #ff6600;
-  padding-bottom: 2px;
+  background-color: #e65c00;
+  transform: translateY(-2px);
+}
+
+/* Responsive navbar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
 }
 
 /* ===========================
@@ -105,32 +120,8 @@ body {
 }
 
 /* ===========================
-   RESPONSIVENESS
-=========================== */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .navbar ul {
-    flex-direction: column;
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-
-  .actions {
-    flex-direction: column;
-  }
-
-  .actions button {
-    width: 100%;
-  }
-}
-
-/* ================================
    RECIPE PAGE STYLING
-================================ */
+=========================== */
 .suggest-btn {
   display: inline-block;
   background-color: #4caf50;
@@ -154,7 +145,6 @@ body {
   transform: scale(0.97);
 }
 
-/* Recipes container and cards */
 .recipes-container {
   padding: 20px;
 }
@@ -203,3 +193,120 @@ body {
   background-color: #0056b3;
 }
 
+/* ==============================
+   INGREDIENTS SECTION
+============================== */
+#ingredients-section {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+#ingredients-section h1 {
+  color: #ff6600;
+  margin-bottom: 1rem;
+}
+
+/* Add ingredient form */
+.add-ingredient-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.add-ingredient-form input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 120px;
+}
+
+.add-ingredient-form button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-ingredient-form button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+/* Pantry list */
+#pantry-container {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+#pantry-container li {
+  padding: 10px 12px;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+/* Delete button */
+#pantry-container li button {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#pantry-container li button:hover {
+  background-color: #c82333;
+}
+
+/* Back button */
+#back-to-dashboard {
+  background-color: #ff6600;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#back-to-dashboard:hover {
+  background-color: #e65c00;
+  transform: translateY(-2px);
+}
+
+/* ==============================
+   RESPONSIVENESS
+============================== */
+@media (max-width: 768px) {
+  .add-ingredient-form {
+    flex-direction: column;
+  }
+
+  .add-ingredient-form input,
+  .add-ingredient-form button {
+    width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}

@@ -1,9 +1,12 @@
+// js/login.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#loginForm");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    // ✅ Get username and password
     const username = document.querySelector("#username").value.trim();
     const password = document.querySelector("#password").value.trim();
 
@@ -13,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
+      // 🔹 Call your custom login endpoint
       const response = await fetch("http://127.0.0.1:8000/api/auth/login/", {
         method: "POST",
         headers: {
@@ -24,22 +28,33 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Login error:", errorData);
-        alert("Invalid username or password.");
+        alert(errorData.detail || "Invalid username or password.");
         return;
       }
 
+      // 🔹 Parse returned tokens
       const data = await response.json();
 
-      // ✅ Store tokens in localStorage
-      localStorage.setItem("access", data.access);
-      localStorage.setItem("refresh", data.refresh);
+      // Check that your backend actually returns access and refresh tokens
+      if (!data.access || !data.refresh) {
+        alert("Login succeeded but no tokens received. Check backend response.");
+        console.log("Backend response:", data);
+        return;
+      }
+
+      // 🔹 Store tokens in localStorage
+      localStorage.setItem("access_token", data.access);
+      localStorage.setItem("refresh_token", data.refresh);
       localStorage.setItem("username", username);
 
-      alert("✅ Login successful!");
-      window.location.href = "homepage.html"; // redirect to homepage
+      console.log("Login successful. Tokens stored.");
+
+      // 🔹 Redirect to homepage
+      window.location.href = "homepage.html";
+
     } catch (err) {
       console.error("Network error:", err);
-      alert("Network error. Please check your connection or server.");
+      alert("Network error. Make sure your backend is running on http://127.0.0.1:8000");
     }
   });
 });

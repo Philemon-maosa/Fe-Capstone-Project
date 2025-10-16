@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- 🔹 Navigation Bar -->
+  <!-- Navigation Bar -->
   <header class="navbar">
     <h1 class="logo">HomeMenuApp</h1>
     <nav>
@@ -20,19 +20,34 @@
     </nav>
   </header>
 
-  <!-- 🔹 Dashboard Section -->
   <main class="dashboard-container">
-    <h1>Welcome to HomeMenu 🍽️</h1>
-    <p id="welcome-text">Loading your info...</p>
+    <!-- Dashboard Section -->
+    <section id="dashboard-section">
+      <h1>Welcome to HomeMenu 🍽️</h1>
+      <p id="welcome-text">Loading your info...</p>
+      <section class="actions">
+        <button id="view-recipes">View Recipes</button>
+        <button id="view-ingredients">My Ingredients</button>
+      </section>
+    </section>
 
-    <section class="actions">
-      <button id="view-recipes">View Recipes</button>
-      <button id="view-ingredients">My Ingredients</button>
+    <!-- Ingredients Section (Hidden by default) -->
+    <section id="ingredients-section" style="display:none;">
+      <h1>My Ingredients</h1>
       
+      <!-- Add Ingredient Form -->
+      <div class="add-ingredient-form">
+        <input type="text" id="ingredient-name" placeholder="Ingredient name">
+        <input type="number" id="ingredient-quantity" placeholder="Quantity">
+        <button id="add-ingredient-btn">Add Ingredient</button>
+      </div>
+
+      <!-- Pantry List -->
+      <ul id="pantry-container"></ul>
+      <button id="back-to-dashboard">Back to Dashboard</button>
     </section>
   </main>
 
-  <!-- 🔹 Script -->
   <script src="js/homepage.js"></script>
 </body>
 </html>

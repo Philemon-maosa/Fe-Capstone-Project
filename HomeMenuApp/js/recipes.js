@@ -74,14 +74,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/recipes/suggest/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ ingredients }),
-        });
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/recipes/recipes/suggest/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ ingredients }),
+          }
+        );
 
         if (!response.ok) {
           recipesList.innerHTML = `<p>Failed to load suggestions. Status: ${response.status}</p>`;

@@ -15,28 +15,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  const titleEl = document.getElementById("recipe-title");
+  const descEl = document.getElementById("recipe-description");
+  const instructionsEl = document.getElementById("recipe-instructions");
+  const ingredientsList = document.getElementById("ingredients-list");
+
   try {
     const response = await fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}/`, {
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (!response.ok) throw new Error("Failed to fetch recipe details.");
+    if (!response.ok) throw new Error(`Failed to fetch recipe details. Status: ${response.status}`);
 
     const recipe = await response.json();
 
-    document.getElementById("recipe-title").textContent = recipe.title;
-    document.getElementById("recipe-description").textContent = recipe.description;
-    document.getElementById("recipe-instructions").textContent = recipe.instructions;
+    // Populate recipe details
+    titleEl.textContent = recipe.title || "No title";
+    descEl.textContent = recipe.description || "No description available.";
+    instructionsEl.textContent = recipe.instructions || "No instructions provided.";
 
-    const ingredientsList = document.getElementById("ingredients-list");
+    // Populate ingredients
     ingredientsList.innerHTML = "";
-
     if (recipe.ingredients && recipe.ingredients.length > 0) {
       recipe.ingredients.forEach((ing) => {
         const li = document.createElement("li");
-        li.textContent = `${ing.name} (${ing.quantity || ''} ${ing.unit || ''})`;
+        li.textContent = `${ing.name}${ing.quantity ? ` - ${ing.quantity}` : ""}${ing.unit ? ` ${ing.unit}` : ""}`;
         ingredientsList.appendChild(li);
       });
     } else {
@@ -44,10 +50,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
   } catch (error) {
-    console.error("Error:", error);
-    alert("Error loading recipe details.");
+    console.error("Error fetching recipe:", error);
+    titleEl.textContent = "Error loading recipe";
+    descEl.textContent = "";
+    instructionsEl.textContent = "";
+    ingredientsList.innerHTML = "<li>Could not load ingredients.</li>";
   }
 
+  // Back button
   document.getElementById("back-btn").addEventListener("click", () => {
     window.location.href = "recipes.html";
   });

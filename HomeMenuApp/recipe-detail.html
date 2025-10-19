@@ -1,47 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recipe Details | HomeMenuApp</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <header class="navbar">
-    <h1 class="logo">🍽️ HomeMenuApp</h1>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="homepage.html">Homepage</a></li>
-        <li><a href="recipes.html" class="active">Recipes</a></li>
-        <li><a href="kitchenlist.html">My Kitchen</a></li>
-        <li><a href="logout.html">Logout</a></li>
-      </ul>
-    </nav>
-  </header>
+// js/recipe-detail.js
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("access_token"); // Ensure consistency with login.js
+  if (!token) {
+    alert("Please log in first!");
+    window.location.href = "login.html";
+    return;
+  }
 
-  <main class="recipe-detail-container">
-    <div id="recipe-detail" class="recipe-card">
-      <h2 id="recipe-title">Loading recipe...</h2>
-      <p id="recipe-description"></p>
+  const recipeTitle = document.getElementById("recipe-title");
+  const recipeDescription = document.getElementById("recipe-description");
+  const ingredientsList = document.getElementById("ingredients-list");
+  const recipeInstructions = document.getElementById("recipe-instructions");
+  const backBtn = document.getElementById("back-btn");
 
-      <section class="ingredients-section">
-        <h3>Ingredients</h3>
-        <ul id="ingredients-list"></ul>
-      </section>
+  // Get recipe ID from URL
+  const params = new URLSearchParams(window.location.search);
+  const recipeId = params.get("id");
+  if (!recipeId) {
+    recipeTitle.textContent = "Recipe not found.";
+    return;
+  }
 
-      <section class="instructions-section">
-        <h3>Instructions</h3>
-        <p id="recipe-instructions"></p>
-      </section>
+  // Fetch recipe details
+  try {
+    const res = await axios.get(`https://your-backend-domain.com/api/recipes/${recipeId}/`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
-      <button id="back-btn" class="btn">← Back to Recipes</button>
-    </div>
-  </main>
+    const recipe = res.data;
 
-  <footer>
-    <p>© 2025 HomeMenuApp. All rights reserved.</p>
-  </footer>
+    // Render recipe details
+    recipeTitle.textContent = recipe.title || "No title";
+    recipeDescription.textContent = recipe.description || "No description available.";
+    recipeInstructions.textContent = recipe.instructions || "No instructions provided.";
 
-  <script src="js/recipe-detail.js"></script>
-</body>
-</html>
+    // Render ingredients
+    ingredientsList.innerHTML = "";
+    if (recipe.ingredients && recipe.ingredients.length > 0) {
+      recipe.ingredients.forEach(ing => {
+        const li = document.createElement("li");
+        li.textContent = `${ing.name} (${ing.quantity || ""} ${ing.unit || ""})`;
+        ingredientsList.appendChild(li);
+      });
+    } else {
+      ingredientsList.innerHTML = "<li>No ingredients listed.</li>";
+    }
+
+  } catch (err) {
+    console.error("Error fetching recipe details:", err);
+    recipeTitle.textContent = "Failed to load recipe details.";
+    recipeDescription.textContent = "";
+    recipeInstructions.textContent = "";
+    ingredientsList.innerHTML = "<li></li>";
+  }
+
+  // Back button
+  backBtn.addEventListener("click", () => {
+    window.location.href = "recipes.html";
+  });
+});

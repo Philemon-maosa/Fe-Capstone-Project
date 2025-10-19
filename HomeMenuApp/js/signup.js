@@ -9,7 +9,7 @@ document.querySelector("#signup-form").addEventListener("submit", async (e) => {
   const password = document.querySelector("#password").value.trim();
   const confirmPassword = document.querySelector("#confirm-password").value.trim();
 
-  // Validation
+  // 🔹 Basic validation
   if (!fullname || !email || !password || !confirmPassword) {
     alert("Please fill in all fields.");
     return;
@@ -21,8 +21,8 @@ document.querySelector("#signup-form").addEventListener("submit", async (e) => {
   }
 
   try {
-    // 1️⃣ Signup request
-    const signupResponse = await fetch("http://127.0.0.1:8000/api/auth/register/", {
+    // 🔹 STEP 1: Register the user
+    const signupResponse = await fetch("https://maosa.pythonanywhere.com/api/auth/register/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -33,19 +33,23 @@ document.querySelector("#signup-form").addEventListener("submit", async (e) => {
       }),
     });
 
+    const signupData = await signupResponse.json().catch(() => ({}));
+    console.log("Signup response:", signupResponse.status, signupData);
+
     if (!signupResponse.ok) {
-      const errorData = await signupResponse.json();
-      console.error("Signup error:", errorData);
-      alert(errorData.detail || "Signup failed! Check console for details.");
+      alert(signupData.detail || "Signup failed. Please check your input.");
       return;
     }
 
-    // 2️⃣ Automatic login using your backend login endpoint
-    const loginResponse = await fetch("http://127.0.0.1:8000/api/auth/login/", {
+    // 🔹 STEP 2: Automatically log the user in
+    const loginResponse = await fetch("https://maosa.pythonanywhere.com/api/auth/login/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: email, password }),
     });
+
+    const loginData = await loginResponse.json().catch(() => ({}));
+    console.log("Login response:", loginResponse.status, loginData);
 
     if (!loginResponse.ok) {
       alert("Signup succeeded, but automatic login failed. Please login manually.");
@@ -53,27 +57,28 @@ document.querySelector("#signup-form").addEventListener("submit", async (e) => {
       return;
     }
 
-    const loginData = await loginResponse.json();
-
-    // Ensure tokens are returned
+    // 🔹 STEP 3: Save JWT tokens or ask user to log in manually
     if (!loginData.access || !loginData.refresh) {
-      alert("Login succeeded but no tokens received. Check backend response.");
-      console.log("Backend response:", loginData);
+      console.warn("No tokens in response:", loginData);
+      localStorage.setItem("username", loginData.username || fullname);
+      alert("Signup successful! Please log in manually to get tokens.");
+      window.location.href = "login.html";
       return;
     }
 
-    // 3️⃣ Store tokens in localStorage
+    // ✅ Tokens received — store them
     localStorage.setItem("access_token", loginData.access);
     localStorage.setItem("refresh_token", loginData.refresh);
-    localStorage.setItem("username", fullname);
+    localStorage.setItem("username", loginData.username || fullname);
 
     console.log("Signup and login successful. Tokens stored.");
 
-    // Redirect to homepage
+    // 🔹 Redirect to homepage
+    alert("Signup & login successful!");
     window.location.href = "homepage.html";
 
   } catch (err) {
     console.error("Network error:", err);
-    alert("Network error. Please check your connection or server.");
+    alert("Network error. Please check your internet connection or backend server.");
   }
 });

@@ -1,134 +1,131 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("access");
+// js/kitchenlist.js
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("access_token");
+  const itemList = document.getElementById("itemList");
+  const addItemForm = document.getElementById("addItemForm");
+  const itemInput = document.getElementById("itemInput");
+  const itemQuantity = document.getElementById("itemQuantity");
+  const itemUnit = document.getElementById("itemUnit");
+  const suggestBtn = document.getElementById("suggest-btn");
+  const suggestionsContainer = document.getElementById("suggestions-container");
+
   if (!token) {
-    alert("You must log in!");
+    alert("Please log in first!");
     window.location.href = "login.html";
     return;
   }
 
-  const itemList = document.getElementById("itemList");
-  const form = document.getElementById("addItemForm");
-  const nameInput = document.getElementById("itemInput");
-  const quantityInput = document.getElementById("itemQuantity");
-  const unitInput = document.getElementById("itemUnit");
-  const suggestBtn = document.getElementById("suggest-btn");
-  const suggestionsContainer = document.getElementById("suggestions-container");
+  // -------------------- Backend URL --------------------
+  const BACKEND_URL = "https://maosa.pythonanywhere.com/api";
 
-  // 🔹 Fetch pantry items from backend
+  // -------------------- Load pantry items --------------------
   async function loadPantryItems() {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/pantry/", {
-        headers: { Authorization: `Bearer ${token}` },
+      const response = await axios.get(`${BACKEND_URL}/pantry/`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-      if (!res.ok) throw new Error("Failed to load pantry items");
-      const items = await res.json();
-      renderItems(items);
+      renderPantryItems(response.data);
     } catch (err) {
-      console.error(err);
-      itemList.innerHTML = "<li>Error loading pantry items.</li>";
+      console.error("Error loading pantry items:", err);
+      itemList.innerHTML = "<li>Error loading pantry items. Check console.</li>";
     }
   }
 
-  // 🔹 Render pantry items
-  function renderItems(items) {
-    itemList.innerHTML = "";
+  // -------------------- Render pantry items --------------------
+  function renderPantryItems(items) {
     if (!items || items.length === 0) {
       itemList.innerHTML = "<li>No ingredients added yet.</li>";
       return;
     }
-    items.forEach((item) => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <span>${item.name} (${item.quantity || ""} ${item.unit || ""})</span>
-        <button data-id="${item.id}" class="delete-btn">Delete</button>
-      `;
-      itemList.appendChild(li);
-    });
 
-    // Delete functionality
-    document.querySelectorAll(".delete-btn").forEach((btn) => {
-      btn.addEventListener("click", async (e) => {
-        const id = e.target.dataset.id;
+    itemList.innerHTML = items.map(item => `
+      <li data-id="${item.id}">
+        ${item.name} ${item.quantity || ""} ${item.unit || ""}
+        <button class="delete-btn">Delete</button>
+      </li>
+    `).join("");
+
+    // Add delete button listeners
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+      btn.addEventListener("click", async e => {
+        const li = e.target.closest("li");
+        const itemId = li.dataset.id;
         try {
-          const res = await fetch(`http://127.0.0.1:8000/api/pantry/${id}/`, {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` },
+          await axios.delete(`${BACKEND_URL}/pantry/${itemId}/`, {
+            headers: { Authorization: `Bearer ${token}` }
           });
-          if (!res.ok) throw new Error("Failed to delete item");
-          loadPantryItems();
+          loadPantryItems(); // Refresh list
         } catch (err) {
-          console.error(err);
-          alert("Could not delete item.");
+          console.error("Error deleting item:", err);
+          alert("Failed to delete item.");
         }
       });
     });
   }
 
-  // 🔹 Add new pantry item
-  form.addEventListener("submit", async (e) => {
+  // -------------------- Add new pantry item --------------------
+  addItemForm.addEventListener("submit", async e => {
     e.preventDefault();
-    const name = nameInput.value.trim();
-    const quantity = quantityInput.value.trim();
-    const unit = unitInput.value.trim();
-    if (!name) return;
+    const name = itemInput.value.trim();
+    const quantity = itemQuantity.value.trim();
+    const unit = itemUnit.value.trim();
+
+    if (!name) return alert("Please enter an ingredient name.");
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/pantry/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ name, quantity, unit }),
-      });
-      if (!res.ok) throw new Error("Failed to add item");
-      nameInput.value = "";
-      quantityInput.value = "";
-      unitInput.value = "";
-      loadPantryItems();
+      await axios.post(`${BACKEND_URL}/pantry/`, 
+        { name, quantity, unit },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      itemInput.value = "";
+      itemQuantity.value = "";
+      itemUnit.value = "";
+      loadPantryItems(); // Refresh list
     } catch (err) {
-      console.error(err);
-      alert("Could not add item.");
+      console.error("Error adding item:", err);
+      if (err.response) {
+        alert(`Error: ${err.response.status} ${err.response.statusText}`);
+      } else {
+        alert("Network error. Could not add ingredient. Check console.");
+      }
     }
   });
 
-  // 🔹 Suggest recipes
-  if (suggestBtn) {
-    suggestBtn.addEventListener("click", async () => {
-      try {
-        const res = await fetch("http://127.0.0.1:8000/api/pantry/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!res.ok) throw new Error("Failed to load pantry items");
+  // -------------------- Suggest recipes --------------------
+  suggestBtn.addEventListener("click", async () => {
+    try {
+      // 1️⃣ Get all pantry items first
+      const pantryRes = await axios.get(`${BACKEND_URL}/pantry/`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const ingredients = pantryRes.data.map(i => i.name);
 
-        const pantryItems = await res.json();
-        const ingredients = pantryItems.map((i) => i.name);
-        if (ingredients.length === 0) {
-          alert("No ingredients found. Add some first!");
-          return;
-        }
-
-        const suggestRes = await fetch("http://127.0.0.1:8000/api/recipes/suggest/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ ingredients }),
-        });
-
-        if (!suggestRes.ok) throw new Error("Failed to fetch suggestions");
-
-        const suggestions = await suggestRes.json();
-        renderSuggestions(suggestions);
-      } catch (err) {
-        console.error(err);
-        alert("Error fetching suggested recipes.");
+      if (ingredients.length === 0) {
+        alert("No ingredients found. Add some first!");
+        return;
       }
-    });
-  }
 
-  // 🔹 Render suggested recipes
+      // 2️⃣ Request suggested recipes from backend
+      const suggestRes = await axios.post(
+        `${BACKEND_URL}/recipes/suggest/`, // ✅ Ensure trailing slash
+        { ingredients },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // 3️⃣ Render the results
+      renderSuggestions(suggestRes.data);
+    } catch (err) {
+      console.error("Error fetching suggested recipes:", err);
+
+      if (err.response) {
+        alert(`Error: ${err.response.status} ${err.response.statusText}`);
+      } else {
+        alert("Network error while fetching recipes. Check console.");
+      }
+    }
+  });
+
+  // -------------------- Render suggested recipes --------------------
   function renderSuggestions(suggestions) {
     suggestionsContainer.innerHTML = "";
     if (!suggestions || suggestions.length === 0) {
@@ -136,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    suggestions.forEach((s) => {
+    suggestions.forEach(s => {
       const div = document.createElement("div");
       div.classList.add("recipe-card");
       div.innerHTML = `
@@ -148,6 +145,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // 🔹 Initial load
+  // -------------------- Initial load --------------------
   loadPantryItems();
 });

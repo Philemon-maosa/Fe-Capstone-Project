@@ -10,10 +10,10 @@ body {
 }
 
 /* ===========================
-   NAVIGATION BAR (UPDATED)
+   NAVIGATION BAR
 =========================== */
 .navbar {
-  background-color: #ff6600; /* match dashboard theme */
+  background-color: #ff6600;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 1rem 2rem;
   display: flex;
@@ -193,113 +193,113 @@ body {
   background-color: #0056b3;
 }
 
-/* ==============================
-   INGREDIENTS SECTION
-============================== */
-#ingredients-section {
-  margin-top: 2rem;
-  text-align: left;
+/* ===========================
+   KITCHEN / PANTRY SECTION
+=========================== */
+.kitchen-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
 }
 
-#ingredients-section h1 {
+.kitchen-container h2 {
   color: #ff6600;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 }
 
-/* Add ingredient form */
-.add-ingredient-form {
+/* Form to add ingredients */
+#addItemForm {
   display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.add-ingredient-form input {
-  padding: 8px 10px;
-  border-radius: 6px;
+#addItemForm input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 0.95rem;
   flex: 1;
   min-width: 120px;
+  max-width: 200px;
 }
 
-.add-ingredient-form button {
-  background-color: #28a745;
-  color: #fff;
+#addItemForm button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-weight: 500;
+  background-color: #28a745;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.add-ingredient-form button:hover {
+#addItemForm button:hover {
   background-color: #218838;
   transform: translateY(-2px);
 }
 
-/* Pantry list */
-#pantry-container {
+/* Pantry item list */
+#itemList {
   list-style: none;
   padding: 0;
-  margin-bottom: 15px;
+  margin: 0 0 20px 0;
 }
 
-#pantry-container li {
-  padding: 10px 12px;
-  background-color: #f0f0f0;
-  border-radius: 6px;
-  margin-bottom: 8px;
+#itemList li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   font-size: 0.95rem;
 }
 
-/* Delete button */
-#pantry-container li button {
+/* Delete button for pantry items */
+.delete-btn {
   background-color: #dc3545;
-  color: #fff;
-  padding: 4px 8px;
-  font-size: 0.85rem;
+  color: white;
   border: none;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
 }
 
-#pantry-container li button:hover {
+.delete-btn:hover {
   background-color: #c82333;
 }
 
-/* Back button */
-#back-to-dashboard {
-  background-color: #ff6600;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+/* Suggested recipes container */
+.suggestions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
 }
 
-#back-to-dashboard:hover {
-  background-color: #e65c00;
-  transform: translateY(-2px);
-}
-
-/* ==============================
+/* ===========================
    RESPONSIVENESS
-============================== */
+=========================== */
 @media (max-width: 768px) {
-  .add-ingredient-form {
+  #addItemForm {
     flex-direction: column;
+    align-items: center;
   }
 
-  .add-ingredient-form input,
-  .add-ingredient-form button {
-    width: 100%;
+  #addItemForm input,
+  #addItemForm button {
+    width: 90%;
   }
 
   .actions {

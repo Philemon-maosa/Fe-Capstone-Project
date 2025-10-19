@@ -1,31 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="css/style.login.css">
-</head>
-<body>
-  <div class="login-container">
-    <h2>Login to HomeMenu</h2>
-    <form id="loginForm">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" placeholder="Enter username" required>
-      </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
 
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="Enter password" required>
-      </div>
+    <!-- Your existing CSS -->
+    <link rel="stylesheet" href="css/style.login.css" />
 
-      <button type="submit">Login</button>
-    </form>
+    <!-- TailwindCSS CDN (won't affect your current styles unless you use its classes) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-  </div>
+    <!-- Axios CDN for API requests -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login to HomeMenu</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Enter username"
+            required
+          />
+        </div>
 
-  <script src="js/login.js"></script>
-</body>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter password"
+            required
+          />
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <!-- Your existing JS file -->
+    <script src="js/login.js"></script>
+  </body>
 </html>
